@@ -1,23 +1,95 @@
-<!-- Comment.astro -->
-<section class="vh-comment"></section>
+<!-- src/components/Comment.astro -->
+---
+const { comment = false } = Astro.props;
+---
+
+{comment && <section class="vh-comment"></section>}
+
 <script>
-	// 环境id
-	const TwikooEnvId = "https://twikoo-cloudflare.lamia.workers.dev";
-	// 评论组件 dom
-	const commentDOM = ".vh-comment";
-	document.addEventListener("astro:page-load", async () => {
-		if (!document.querySelector(commentDOM) || !TwikooEnvId) return;
-		await LoadScript("https://registry.npmmirror.com/twikoo/1.6.41/files/dist/twikoo.all.min.js");
-		twikoo.init({ envId: SITE_INFO.Twikoo.envId, el: commentDOM });
-	});
-	// 加载外部脚本
-	const LoadScript = src => {
-		return new Promise((resolve, reject) => {
-			const script = document.createElement("script");
-			script.src = src;
-			script.onload = () => resolve(script);
-			script.onerror = () => reject(new Error(`Failed to load script: ${src}`));
-			document.head.appendChild(script);
-		});
-	};
+  // 初始化逻辑（保持原有）
+  const initTwikoo = () => {
+    const ENV_ID = "https://twikoo-cloudflare.lamia.workers.dev";
+    const CDN_URL = "https://cdn.staticfile.net/twikoo/1.6.7/twikoo.all.min.js";
+
+    const container = document.querySelector('.vh-comment');
+    if (!container) return;
+
+    if (!window.twikoo) {
+      const script = document.createElement('script');
+      script.src = CDN_URL;
+      script.async = true;
+      document.head.appendChild(script);
+    }
+
+    const init = () => {
+      if (window.twikoo) {
+        twikoo.init({
+          envId: ENV_ID,
+          el: '.vh-comment',
+          // 新增头像处理配置
+          avatarUrl: (email) => {
+            const hash = md5(email.trim().toLowerCase());
+            return `https://cravatar.cn/avatar/${hash}?d=mp&s=150`;
+          }
+        });
+      } else {
+        setTimeout(init, 500);
+      }
+    };
+    init();
+  };
+
+  // 事件监听（保持原有）
+  document.addEventListener('astro:page-load', initTwikoo);
+  if (document.readyState === 'complete') {
+    initTwikoo();
+  } else {
+    window.addEventListener('load', initTwikoo);
+  }
 </script>
+
+<style>
+  /* 基础容器样式 */
+  .vh-comment {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background: var(--theme-bg-soft);
+    border-radius: 8px;
+  }
+
+  <style>
+  /* 强制重置头像容器 */
+  .tk-avatar {
+    position: relative !important;
+    z-index: 999 !important;
+    width: 80px !important;
+    height: 80px !important;
+    min-width: unset !important;
+    min-height: unset !important;
+    margin-right: 20px !important;
+    isolation: isolate;
+  }
+
+  /* 确保图片完整显示 */
+  .tk-avatar-image {
+    all: unset !important;
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: contain !important;
+    border-radius: 50%;
+    animation: fadeIn 0.5s ease;
+  }
+
+  /* 防止父级容器截断 */
+  .tk-comment {
+    overflow: visible !important;
+    position: static !important;
+    min-height: 100px;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+</style>
+</style>
