@@ -12,15 +12,21 @@
 		"format": "pnpm run format:code && pnpm run format:imports",
 		"format:code": "biome format . --write && prettier -w \"**/*\" \"!**/*.{md,mdx}\" --ignore-unknown --cache",
 		"format:imports": "biome check --formatter-enabled=false --write",
-		"check": "astro check"
+		"check": "astro check",
+		"local": "elog sync -e .elog.env",
+		"local:archive": "elog sync -e .elog.env --config elog.config.archive.js",
+		"sync": "elog sync",
+		"sync:archive": "elog sync --config elog.config.archive.js"
 	},
 	"dependencies": {
-		"@astrojs/markdown-remark": "^6.0.2",
-		"@astrojs/mdx": "4.0.5",
+		"@astrojs/markdown-remark": "^6.2.1",
+		"@astrojs/mdx": "4.1.1",
 		"@astrojs/rss": "4.0.11",
 		"@astrojs/sitemap": "3.2.1",
+		"@elog/cli": "^0.14.7",
+		"@elog/plugin-img-r2": "0.1.2-beta.0",
 		"@tailwindcss/vite": "4.0.0-beta.8",
-		"astro": "5.1.5",
+		"astro": "5.4.3",
 		"astro-expressive-code": "^0.39.0",
 		"astro-icon": "^1.1.5",
 		"astro-robots-txt": "^1.0.0",
@@ -59,6 +65,10 @@
 		"typescript": "^5.7.3"
 	},
 	"pnpm": {
-		"onlyBuiltDependencies": ["@biomejs/biome", "esbuild", "sharp"]
+		"onlyBuiltDependencies": [
+			"@biomejs/biome",
+			"esbuild",
+			"sharp"
+		]
 	}
 }
