@@ -4,6 +4,8 @@ const format = async (doc, imageClient) => {
   // 处理 draft 字段
   doc.properties.draft = ["true", true].includes(doc.properties.draft);
 
+  doc.properties.comment = ["true", true].includes(doc.properties.comment);
+
   // 清理不需要的字段
   ["status", "date", "updated"].forEach(field => delete doc.properties[field]);
 
