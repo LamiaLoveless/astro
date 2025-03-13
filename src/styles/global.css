@@ -25,13 +25,7 @@
     accent-color: var(--color-accent);
     font-family: "Inter", sans-serif; /* 应用 Inter 字体 */
   }
-
-  img {
-    @apply transition-all duration-300; /* 确保所有图片都有过渡效果 */
-    &:not([class*="avatar"]) {
-      @apply shadow-image hover:shadow-image-hover; /* 非头像图片应用通用阴影 */
-    }
-  }
+  
 
   &[data-theme="light"] {
     color-scheme: light;
@@ -45,11 +39,6 @@
     --color-accent: oklch(70.91% 0.1415 163.7);
     --color-accent-2: oklch(94.66% 0 0);
     --color-quote: oklch(94.8% 0.106 136.49);
-      /* 新增阴影颜色适配 */
-    --tw-shadow-image: 2px 2px 8px rgba(255, 255, 255, 0.1);
-    --tw-shadow-image-hover: 4px 4px 12px rgba(255, 255, 255, 0.2);
-    --tw-shadow-avatar: 0 2px 8px rgba(255, 255, 255, 0.15);
-    --tw-shadow-avatar-hover: 0 4px 12px rgba(255, 255, 255, 0.25);
   }
 }
 
