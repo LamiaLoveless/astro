@@ -14,22 +14,25 @@ import { menuLinks } from "@/site.config";
 			<svg
 				aria-hidden="true"
 				class="me-3 h-10 w-6 sm:absolute sm:-start-18 sm:me-0 sm:h-20 sm:w-12"
-				fill="none"
-				focusable="false"
 				viewBox="0 0 272 480"
 				xmlns="http://www.w3.org/2000/svg"
 			>
-				<title>Logo</title>
-				<path
-					d="M181.334 93.333v-40L226.667 80v40l-45.333-26.667ZM136.001 53.333 90.667 26.667v426.666L136.001 480V53.333Z"
-					fill="#B04304"></path>
-				<path
-					d="m136.001 119.944 45.333-26.667 45.333 26.667-45.333 26.667-45.333-26.667ZM90.667 26.667 136.001 0l45.333 26.667-45.333 26.666-45.334-26.666ZM181.334 53.277l45.333-26.666L272 53.277l-45.333 26.667-45.333-26.667ZM0 213.277l45.333-26.667 45.334 26.667-45.334 26.667L0 213.277ZM136 239.944l-45.333-26.667v53.333L136 239.944Z"
-					fill="#FF5D01"></path>
-				<path
-					d="m136 53.333 45.333-26.666v120L226.667 120V80L272 53.333V160l-90.667 53.333v240L136 480V306.667L45.334 360V240l45.333-26.667v53.334L136 240V53.333Z"
-					fill="#53C68C"></path>
-				<path d="M45.334 240 0 213.334v120L45.334 360V240Z" fill="#B04304"></path>
+				<title>星际核心</title>
+				<defs>
+					<radialGradient id="coreGlow">
+						<stop offset="70%" stop-color="#4a3c8a"/>
+						<stop offset="100%" stop-color="#2d2752" stop-opacity="0"/>
+					</radialGradient>
+				</defs>
+				<g transform="translate(136 160)">
+					<circle r="45" fill="#362c5a">
+						<animate attributeName="r" values="45;48;45" dur="8s" repeatCount="indefinite"/>
+					</circle>
+				</g>
+				<circle cx="136" cy="160" r="35" fill="none" stroke="url(#coreGlow)" stroke-width="70">
+					<animate attributeName="r" values="35;80;35" dur="6s" repeatCount="indefinite"/>
+					<animate attributeName="opacity" values="0.5;0.8;0.5" dur="6s" repeatCount="indefinite"/>
+				</circle>
 			</svg>
 			<span class="text-xl font-bold sm:text-2xl">碧海明珠</span>
 		</a>
@@ -74,13 +77,11 @@ import { menuLinks } from "@/site.config";
 				viewBox="0 0 24 24"
 				xmlns="http://www.w3.org/2000/svg"
 			>
-				<path d="M3.75 9h16.5m-16.5 6.75h16.5" stroke-linecap="round" stroke-linejoin="round"
-				></path>
+				<path d="M3.75 9h16.5m-16.5 6.75h16.5" stroke-linecap="round" stroke-linejoin="round"/>
 			</svg>
 			<svg
 				aria-hidden="true"
 				class="text-accent absolute start-1/2 top-1/2 h-full w-full -translate-x-1/2 -translate-y-1/2 scale-0 opacity-0 transition-all group-aria-expanded:scale-100 group-aria-expanded:opacity-100"
-				class="text-accent"
 				fill="none"
 				focusable="false"
 				id="cross-svg"
@@ -89,7 +90,7 @@ import { menuLinks } from "@/site.config";
 				viewBox="0 0 24 24"
 				xmlns="http://www.w3.org/2000/svg"
 			>
-				<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"></path>
+				<path d="M6 18L18 6M6 6l12 12" stroke-linecap="round" stroke-linejoin="round"/>
 			</svg>
 		</button>
 	</mobile-button>
@@ -99,11 +100,11 @@ import { menuLinks } from "@/site.config";
 	import { toggleClass } from "@/utils/domElement";
 
 	class MobileNavBtn extends HTMLElement {
-		#menuOpen: boolean = false;
+		#menuOpen = false;
 
 		connectedCallback() {
-			const headerEl = document.getElementById("main-header")!;
-			const mobileButtonEl = this.querySelector<HTMLButtonElement>("button");
+			const headerEl = document.getElementById("main-header");
+			const mobileButtonEl = this.querySelector("button");
 
 			mobileButtonEl?.addEventListener("click", () => {
 				if (headerEl) toggleClass(headerEl, "menu-open");
